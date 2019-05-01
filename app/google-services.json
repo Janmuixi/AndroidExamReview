@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "711812547229",
+    "firebase_url": "https://listimagesexamandroid.firebaseio.com",
+    "project_id": "listimagesexamandroid",
+    "storage_bucket": "listimagesexamandroid.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:711812547229:android:8c34d8a8b860ef7e",
+        "android_client_info": {
+          "package_name": "com.example.jan.listimagesexamandroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "711812547229-dfkbs7ifuhofgoa7hustiagpebaidv2n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jan.listimagesexamandroid",
+            "certificate_hash": "42d87e9b26f50b9d8e5844614d34163d54fd2d3e"
+          }
+        },
+        {
+          "client_id": "711812547229-122a3v818kfht8pu4ehf633kd32o3sen.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7s-9h6Ts1poKttyIxhqQejzaYctxfcPo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "711812547229-122a3v818kfht8pu4ehf633kd32o3sen.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
