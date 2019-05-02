@@ -1,0 +1,17 @@
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/action_pause_music"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_pause_black_24dp"
+        android:title="Refresh"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_new_photo"
+        android:title="Settings"
+        android:icon="@drawable/ic_add_black_24dp"
+        app:showAsAction="always" />
+
+
+</menu>
