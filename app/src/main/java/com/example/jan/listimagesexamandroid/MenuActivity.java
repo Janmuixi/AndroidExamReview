@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.google.android.gms.tasks.Continuation;
@@ -32,7 +33,8 @@ public class MenuActivity extends AppCompatActivity {
     ImageView i;
     Button goBtn;
     Button photoBtn;
-    Button pauseBtn;
+    EditText description;
+    EditText aula;
     Bitmap bitmap;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private Uri filePath;
@@ -43,13 +45,12 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         // Initializing vars
-        final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.bensoundukulele);
-        mediaPlayer.start();
         firebaseStorage = FirebaseStorage.getInstance();
         photoBtn = findViewById(R.id.photoBtn);
         goBtn = findViewById(R.id.goBtn);
-        pauseBtn = findViewById(R.id.pauseBtn);
         i = findViewById(R.id.img);
+        description = findViewById(R.id.description);
+        aula = findViewById(R.id.aula);
         // OnClickListeners
         goBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,12 +64,7 @@ public class MenuActivity extends AppCompatActivity {
                 chargeImageOnGallery();
             }
         });
-        pauseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mediaPlayer.stop();
-            }
-        });
+
         //dispatchTakePictureIntent();
     }
 
@@ -76,6 +72,8 @@ public class MenuActivity extends AppCompatActivity {
         UUID uuid = UUID.randomUUID();
         final StorageReference myRef = firebaseStorage.getReference().child("images/" + uuid.toString() + ".jpg");
         UploadTask uploadTask = myRef.putFile(filePath);
+        final String descriptionText = description.getText().toString();
+        final String aulaText = aula.getText().toString();
 
         uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
             @Override
@@ -92,7 +90,7 @@ public class MenuActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<Uri> task) {
                 if (task.isSuccessful()) {
                     Uri downloadUri = task.getResult();
-                    storeImageOnDatabase(downloadUri);
+                    storeImageOnDatabase(downloadUri, descriptionText, aulaText);
 
                     Intent intent = new Intent(MenuActivity.this, ListImagesActivity.class);
                     intent.putExtra("newImage", downloadUri.toString());
@@ -103,13 +101,15 @@ public class MenuActivity extends AppCompatActivity {
         });
     }
 
-    private void storeImageOnDatabase(Uri downloadUri) {
+    private void storeImageOnDatabase(Uri downloadUri, String descriptionText, String aulaText) {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference imagesDatabaseReference = firebaseDatabase.getReference().child("images");
         UUID uuid = UUID.randomUUID();
         DatabaseReference temporalImageDatabaseReference = imagesDatabaseReference.child(uuid.toString());
         temporalImageDatabaseReference.child("imagesUrl").setValue(downloadUri.toString());
         temporalImageDatabaseReference.child("date").setValue(Calendar.getInstance().getTime().toString());
+        temporalImageDatabaseReference.child("description").setValue(descriptionText);
+        temporalImageDatabaseReference.child("aula").setValue(aulaText);
     }
 
     private void chargeImageOnGallery() {
